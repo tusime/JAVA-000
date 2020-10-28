@@ -2,15 +2,15 @@
 
 ### GC 日志解读
 
-打印 GC 日志
+#### 打印 GC 日志
 
 `java -XX:+PrintGCDetails GCLogAnalysis `
 
-导出 GC 日志，包含时间戳
+#### 导出 GC 日志，包含时间戳
 
 `java -Xloggc:gc.demo.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps GCLogAnalysis`
 
-截取一次 YGC 日志
+#### 截取一次 YGC 日志
 ```
 2020-10-25T22:57:48.923+0800: 0.502: [GC (Allocation Failure) [PSYoungGen: 33159K->5105K(38400K)] 33159K->8849K(125952K), 
 0.0042466 secs] [Times: user=0.03 sys=0.03,real=0.00 secs]
@@ -33,7 +33,7 @@ PSYoungGen，垃圾收集器名，并行的标记-复制（mark-copy）算法。
 
 [Times: user=0.03 sys=0.03, real=0.00 secs]，user-所有 GC 线程所消耗的 CPU 时间之和，sys-GC 过程中操作系统调用和系统等待事件所消耗的时间，real-应用程序暂停的时间。
 
-截取一次 FGC 日志
+#### 截取一次 FGC 日志
 ```
 2020-10-25T22:57:49.088+0800: 0.667: [Full GC (Ergonomics) [PSYoungGen: 35828K->17842K(163840K)] [ParOldGen: 90981K->
 90862K(162304K)] 126809K->108705K(326144K), [Metaspace: 2617K->2617K(1056768K)], 0.0273695 secs] 
@@ -51,6 +51,8 @@ Metaspace: 2617K->2617K(1056768K)，Metaspace 区没有回收。
 
 
 ### 不同 GC 对比
+
+日志文件位于01文件夹中
 
 #### 串行 GC
 
@@ -72,7 +74,7 @@ YGC 与并行 GC 一致。FGC 变成 CMS 并发 GC，测试机器 4 核 16 线�
 
 CMS GC 分为 CMS Initial Mark（初始标记），CMS-concurrent-mark（并发标记），CMS-concurrent-preclean（并发预清理），CMS-concurrent-abortable-preclean（并发可终止预清理），CMS Final Remark（最终标记），CMS-concurrent-sweep（并发清除），CMS-concurrent-reset（并发重置）。前四个步骤打印每个并发日志，其中穿插着 YGC，说明业务依旧运行。有 STW 只有初始标记和最终标记两个阶段。CMS GC 时间比并行 FGC 时间减少。
 
-##### G1 GC
+#### G1 GC
 
 `java -XX:+UseG1GC -Xms512m -Xmx512m -Xloggc:gc-G1.demo.log -XX:+PrintGC -XX:+PrintGCDateStamps GCLogAnalysis`
 
@@ -82,7 +84,7 @@ CMS GC 分为 CMS Initial Mark（初始标记），CMS-concurrent-mark（并发�
 
 并发标记分为 initial-mark（初始标记），concurrent-root-region-scan-start（Root区扫描），concurrent-mark-start（并发标记），remark（再次标记），cleanup（清理）。
 
-##### 补充
+#### 补充
 
 堆配置过小，发生 OOM
 
