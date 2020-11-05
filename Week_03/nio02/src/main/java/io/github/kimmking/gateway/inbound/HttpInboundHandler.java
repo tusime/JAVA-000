@@ -20,8 +20,8 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
     public HttpInboundHandler(String proxyServer) {
         this.proxyServer = proxyServer;
         // 创建HttpInboundHandler时，创建HttpOutboundHandler
-        handler = new HttpOutboundHandler(this.proxyServer);
-        //handler = new HttpOutboundHandler(this.proxyServer, null);
+        // handler = new HttpOutboundHandler(this.proxyServer);
+        handler = new HttpOutboundHandler(this.proxyServer, null);
         simpleHttpRequestFilter = new SimpleHttpRequestFilter();
     }
     
@@ -38,8 +38,8 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
             FullHttpRequest fullRequest = (FullHttpRequest) msg;
 
             simpleHttpRequestFilter.filter(fullRequest, ctx);
-            handler.handle(fullRequest, ctx);
-            //handler.simpleHandle(fullRequest, ctx);
+            //handler.handle(fullRequest, ctx);
+            handler.simpleHandle(fullRequest, ctx);
     
         } catch(Exception e) {
             e.printStackTrace();

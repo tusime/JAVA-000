@@ -38,58 +38,59 @@ public class HttpOutboundHandler {
     public HttpOutboundHandler(String backendUrl, String tmp) {
         // 去除url最后的/
         this.backendUrl = backendUrl.endsWith("/") ? backendUrl.substring(0,backendUrl.length()-1) : backendUrl;
-        System.out.println("去除url最后的/"+this.backendUrl);
+        closeableHttpClient = HttpClientBuilder.create().build();
     }
 
     public void simpleHandle(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx) {
         // 拼接接口
-        final String url = this.backendUrl + fullRequest.uri();
-        System.out.println("拼接接口"+fullRequest.uri());
+        final String url = backendUrl + fullRequest.uri();
         simpleDoGet(fullRequest, ctx, url);
     }
 
     public void simpleDoGet(FullHttpRequest fullRequest, ChannelHandlerContext ctx,
                         String url) {
-//        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        // CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet httpGet = new HttpGet(url);
         httpGet.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_KEEP_ALIVE);
+        HttpHeaders httpHeaders = fullRequest.headers();
+//        System.out.println(httpHeaders.get("nio"));
+        httpGet.setHeader("nio", httpHeaders.get("nio"));
         CloseableHttpResponse response = null;
         FullHttpResponse fullHttpResponse = null;
         try {
             response = closeableHttpClient.execute(httpGet);
             byte[] body = EntityUtils.toByteArray(response.getEntity());
-            HttpEntity responseEntity = response.getEntity();
-            System.out.println(responseEntity);
-            System.out.println(EntityUtils.toString(responseEntity));
-            if (responseEntity != null) {
-                System.out.println(EntityUtils.toString(responseEntity));
-            }
-            System.out.println(new String(body));
-            System.out.println(body.length);
+//            HttpEntity responseEntity = response.getEntity();
+//            if (responseEntity != null) {
+//                System.out.println(EntityUtils.toString(responseEntity));
+//            }
+//            System.out.println(new String(body));
+//            System.out.println(body.length);
+            byte[] helloworld = "helloworld".getBytes();
 
-//            fullHttpResponse = new DefaultFullHttpResponse(HTTP_1_1, OK,
-//                    Unpooled.wrappedBuffer(body));
-//
-//            fullHttpResponse.headers().set("Content-Type", "application/json");
-//            fullHttpResponse.headers().setInt("Content-Length",
-//                    Integer.parseInt(response.getFirstHeader("Content-Length").getValue()));
-//
+            fullHttpResponse = new DefaultFullHttpResponse(HTTP_1_1, OK,
+                    Unpooled.wrappedBuffer(helloworld));
+
+            fullHttpResponse.headers().set("Content-Type", "application/json");
+            fullHttpResponse.headers().setInt("Content-Length",
+                    Integer.parseInt(response.getFirstHeader("Content-Length").getValue()));
+
+
 //            for (Header e : response.getAllHeaders()) {
 //                System.out.println(e.getName() + " => " + e.getValue());
 //            }
         } catch (IOException e) {
             e.printStackTrace();
-            response = (CloseableHttpResponse) new DefaultFullHttpResponse(HTTP_1_1, NO_CONTENT);
+            fullHttpResponse = new DefaultFullHttpResponse(HTTP_1_1, NO_CONTENT);
             exceptionCaught(ctx, e);
         } finally {
             if (fullRequest != null) {
                 if (!HttpUtil.isKeepAlive(fullRequest)) {
-                    ctx.write(response).addListener(ChannelFutureListener.CLOSE);
+                    ctx.write(fullHttpResponse).addListener(ChannelFutureListener.CLOSE);
                 } else {
-                    ctx.write(response);
+                    ctx.write(fullHttpResponse);
                 }
             }
-
             ctx.flush();
         }
     }
