@@ -1,7 +1,3 @@
-#### 01 插入100万订单模拟数据，测试不同方式的插入效率
-
-1. PreparedStatement addBatch 76580 ms 
-``` java
 import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PreparedGenerateData {
+    //"com.mysql.jdbc.Driver";
     static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
     static final String URL = "jdbc:mysql://localhost:3306/testdb?useSSL=false";
     static final String USERNAME = "root";
@@ -18,7 +15,7 @@ public class PreparedGenerateData {
         long start = System.currentTimeMillis();
         exec();
         long end = System.currentTimeMillis();
-        // 76580 ms
+        // 76580 ms，多值 Multiple Values 用时 8647ms
         System.out.println("耗时：" + (end - start) + " ms");
     }
 
@@ -52,17 +49,3 @@ public class PreparedGenerateData {
         }
     }
 }
-```
-
-2. 多值 Multiple Values，用时 8647 ms
-
-3. load data 暂未测
-
-#### 02 配置异步复制，半同步复制、组复制
-
-
-#### 03 读写分离-动态切换数据源版本1.0
-
-
-#### 04 读写分离-数据库框架版本2.0
-
