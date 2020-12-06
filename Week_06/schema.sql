@@ -33,8 +33,8 @@ CREATE TABLE `t_product` (
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `snapshot_id` int(11) DEFAULT NULL COMMENT '快照id，如何使用？',
-  `userid` int(11) NOT NULL,
+  `snapshot_id` bigint(11) DEFAULT NULL COMMENT '快照id，如何使用？',
+  `userid` bigint(11) NOT NULL,
   `total` bigint(255) DEFAULT NULL,
   `status` tinyint(1) NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
