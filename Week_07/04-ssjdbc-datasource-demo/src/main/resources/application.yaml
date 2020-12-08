@@ -1,0 +1,38 @@
+spring:
+  # 配置参考 https://shardingsphere.apache.org/document/legacy/4.x/document/cn/manual/sharding-jdbc/usage/read-write-splitting/
+  shardingsphere:
+    datasource:
+      # 数据库别名
+      names: master,slave1,slave2
+      # 主库
+      master:
+        # 数据源类别
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3316/testdb?useSSL=false
+        username: root
+        password:
+      # 从库 1
+      slave1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3326/testdb?useSSL=false
+        username: root
+        password:
+      # 从库 2
+      slave2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3336/testdb?useSSL=false
+        username: root
+        password:
+    # 指定哪个为主从，主从策略
+    masterslave:
+      load-balance-algorithm-type: round_robin
+      name: ms
+      master-data-source-name: master
+      slave-data-source-names: slave1,slave2
+    props:
+      # 打印SQL
+      sql:
+        show: true

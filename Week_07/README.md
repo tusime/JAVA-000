@@ -63,6 +63,19 @@ public class PreparedGenerateData {
 
 #### 03 读写分离-动态切换数据源版本1.0
 
+1. 配置 3 个 MySQL 数据库实例，为方便区分，3 个数据库结构一致，数据内容不同，sql 文件为 init.sql
+	* jdbc:mysql://localhost:3316/testdb
+	* jdbc:mysql://localhost:3326/testdb
+	* jdbc:mysql://localhost:3336/testdb
+
+2. 测试
+	* 主库读取：http://127.0.0.1:8080/list1
+	* 从库读取：http://127.0.0.1:8080/list2
 
 #### 04 读写分离-数据库框架版本2.0
+
+1. 将 03 中 MySQL 数据库的数据库表清空，并配置主从数据库，3316 为主数据库。
+2. 测试
+	* 主库写：http://127.0.0.1:8080/list
+	* 从库读：http://127.0.0.1:8080/insert
 

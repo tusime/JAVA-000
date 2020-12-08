@@ -21,7 +21,6 @@ public class OrderServiceImpl implements OrderService {
         String sql = "SELECT * FROM t_order;";
         JdbcTemplate master = new JdbcTemplate(dataSource);
         List<Map<String, Object>> l1 = master.queryForList(sql);
-//        System.out.println(l1.toString());
         return l1;
     }
 
@@ -32,7 +31,6 @@ public class OrderServiceImpl implements OrderService {
         String sql = "SELECT * FROM t_order;";
         JdbcTemplate master = new JdbcTemplate(dataSource);
         List<Map<String, Object>> l1 = master.queryForList(sql);
-//        System.out.println(l1.toString());
         return l1;
     }
 }
