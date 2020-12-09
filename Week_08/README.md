@@ -116,4 +116,8 @@ mysql> select * from t_order;
 mysql> select * from t_order id=543596550203879426;
 ...
 ```
+
+7. 参考 [FQA](https://shardingsphere.apache.org/document/current/cn/faq/#13-windows%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%80%9A%E8%BF%87git%E5%85%8B%E9%9A%86shardingsphere%E6%BA%90%E7%A0%81%E6%97%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8F%90%E7%A4%BA%E6%96%87%E4%BB%B6%E5%90%8D%E8%BF%87%E9%95%BF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3)
+
+
 ### 02 简单的分布式事务应用 demo
