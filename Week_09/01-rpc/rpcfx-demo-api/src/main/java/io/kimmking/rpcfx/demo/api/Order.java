@@ -2,23 +2,23 @@ package io.kimmking.rpcfx.demo.api;
 
 public class Order {
 
-    private int id;
+    private Integer id;
 
     private String name;
 
     private float amount;
 
-    public Order(int id, String name, float amount) {
+    public Order(Integer id, String name, float amount) {
         this.id = id;
         this.name = name;
         this.amount = amount;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

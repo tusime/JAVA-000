@@ -22,6 +22,7 @@ public final class Rpcfx {
 
     static {
         // 反序列化全局配置
+        // fastjson高版本添加的功能，反序列化时能够指定类型存在安全问题（例如远程classload添加操作），高版本默认只有白名单中的类可被指定
         ParserConfig.getGlobalInstance().addAccept("io.kimmking");
     }
 

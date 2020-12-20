@@ -14,7 +14,6 @@ public class RpcfxClientApplication {
 	// 二方库
 	// 三方库 lib
 	// nexus, userserivce -> userdao -> user
-	//
 
 	public static void main(String[] args) {
 
@@ -30,13 +29,22 @@ public class RpcfxClientApplication {
 		System.out.println(String.format("find order name=%s, amount=%f",order.getName(),order.getAmount()));
 
 		System.out.println("====================================================================");
-		UserService userService2 = RpcfxAop.create(UserService.class, "http://localhost:8080/");
+
+		UserService userService2 = Rpcfx.create(UserService.class, "http://localhost:8080/2");
 		User user2 = userService2.findById(1);
 		System.out.println("find user id=1 from server: " + user2.getName());
 
-		UserService userService3 = RpcfxAop.create(UserService.class, "http://localhost:8080/2");
+		System.out.println("====================================================================");
+
+		UserService userService3 = RpcfxAop.create(UserService.class, "http://localhost:8080/");
 		User user3 = userService3.findById(1);
 		System.out.println("find user id=1 from server: " + user3.getName());
+
+		System.out.println("====================================================================");
+
+		UserService userService4 = RpcfxAop.create(UserService.class, "http://localhost:8080/2");
+		User user4 = userService4.findById(1);
+		System.out.println("find user id=1 from server: " + user4.getName());
 
 		// 新加一个OrderService
 

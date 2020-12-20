@@ -42,11 +42,12 @@ public class RpcfxInvoker {
         try {
             // 反射获得方法
             Method method = resolveMethodFromClass(service.getClass(), request.getMethod());
-            // 调用方法 dubbo, fastjson,
+            System.out.println(method);
+            // 调用方法 dubbo, fastjson 改进反射为字节码增强
             Object result = method.invoke(service, request.getParams());
-            // 可以将两次json序列化能否合并成一个？将@RestController去掉，统一使用fastjson
-            // 序列化object->json字符串，spring 再序列化（@RestController的作用）
-            // RpcfxResponse 的 result 是 Object，客户端不知道 result 具体是什么类型，fastjson序列化时用 WriteClassName 写入类型名
+            // 可以将两次json序列化能否合并成一个？可以，将@RestController去掉，统一使用fastjson序列化
+            // 序列化 object->json 字符串，spring 再序列化（@RestController的作用）
+            // RpcfxResponse 的 result 是 Object，客户端不知道 result 是什么类型，fastjson 序列化时用 WriteClassName 写入类型名
             response.setResult(JSON.toJSONString(result, SerializerFeature.WriteClassName));
             response.setStatus(true);
             return response;
