@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.tusi.mq</groupId>
-    <artifactId>activemq-jms</artifactId>
+    <artifactId>spring-activemq-jms</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>activemq-jms</name>
+    <name>spring-activemq-jms</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
